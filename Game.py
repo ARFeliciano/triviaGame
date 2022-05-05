@@ -40,6 +40,7 @@ def main():
 
 #saves
 def ck_savez():
+    results = str(games.find_one())
     lst_gmz = []
     gm_data = games.find()
     for line in gm_data:
@@ -54,20 +55,25 @@ def ck_savez():
             if us_input == "1":
                 old_user = input("Enter your old username >>> ")
                 new_user = input("Enter a new username >>> ")
-                if not old_user == x["user"]: 
+                if results == "None": 
                     raise ValueError
+                elif not old_user == x["user"]: 
+                    raise ValueError   
                 else:     
                     for x in lst_gmz:
                         games.update_one({"user": old_user}, {"$set": {"user" : new_user}})   
                         print("\u0332".join(" GameType:"),x["type"],"\n","\u0332".join("Username:"),x["user"],"\n", "\u0332".join("Score:"),x["score"],"\n","\u0332".join("Game:"),x["games"],"\n",) 
                         print("Update Successfully")
                         main()
-            elif us_input == "2":
-                game_num = int(input("\nTo delete a game, please enter a game number:\n>>> "))
-                games.delete_one({"games" : game_num})  
-                print("\u0332".join(" GameType:"),x["type"],"\n","\u0332".join("Username:"),x["user"],"\n", "\u0332".join("Score:"),x["score"],"\n","\u0332".join("Game:"),x["games"],"\n",) 
-                print("\nGame Successfully deleted!")  
-                main()     
+            elif us_input == "2":    
+                    game_num = int(input("\nTo delete a game, please enter a game number:\n>>> "))
+                    if results == "None": 
+                        raise ValueError
+                    else:    
+                        games.delete_one({"games" : game_num})  
+                        print("\u0332".join(" GameType:"),x["type"],"\n","\u0332".join("Username:"),x["user"],"\n", "\u0332".join("Score:"),x["score"],"\n","\u0332".join("Game:"),x["games"],"\n",) 
+                        print("\nGame Successfully deleted!")  
+                        main()     
             elif us_input == "3":
                 main()
             else: 
