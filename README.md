@@ -35,7 +35,3 @@
 • Add more categories based on the History genre
 
 • Add other genres of questions 
-
-# Getting Started 
-
-// 
